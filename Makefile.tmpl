@@ -1,0 +1,37 @@
+CC:=gcc
+LDFLAGS:=-lm
+TARGET:=
+OBJ:=$(TARGET:%=%.o)
+FUNC=
+FOBJ=$(FUNC:%=%.o)
+HF=
+#.hまで打て
+.PHONY:all clean
+all:$(TARGET)
+
+define template
+$(1):$(1).o $(FOBJ)
+	$(CC) $(LDFLAGS) -o $1 $(1).o $(FOBJ)
+
+$(1).o:$(1).c $(HF)
+	$(CC) -c $(1).c
+
+endef
+
+define genobj
+$(1).o:$(1).c $(HF)
+	$(CC) -c $(1).c
+
+endef
+
+$(foreach x,$(TARGET),$(eval $(call template,$(x))))
+$(foreach x,$(FUNC),$(eval $(call genobj,$(x))))
+
+#%:%.o
+#	$(CC) $(LDFLAGS) -o $@  $^
+
+#%.o:%.c
+#	$(CC) -c  $<
+
+clean:
+	rm -rf $(TARGET) $(OBJ)
