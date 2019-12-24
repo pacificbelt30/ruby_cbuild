@@ -71,7 +71,7 @@ when "gen" then
   if (File.exist?("#{ARGV[1]}.c")) then
     puts "そのファイル名存在するぜ"
   else
-    gen = "cp $CBPATH/comment.c ./" + ARGV[1]+".c"
+    gen = "cp $CBPATH/comment.c.tmpl ./" + ARGV[1]+".c"
     system(gen)
   end
  
