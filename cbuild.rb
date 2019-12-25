@@ -12,6 +12,40 @@ def run(name)
   system("cat #{stdtxt}")
 end
 
+class Run
+  def initialize
+    
+  end
+end
+
+class Gen
+  def initialize
+    
+  end
+end
+
+
+
+class Build
+  def initialize
+  end
+  def fileget
+  end
+end
+
+class New
+  def initialize(argc)
+      @argc = argc
+  end
+  def fileexist(filename)
+    if !(File.exist?("Makefile")||File.exist?("makefile")) then
+      system("cp $CBPATH/Makefile.tmpl ./Makefile")  
+    else
+      puts "Makefileがすでに存在します"
+    end
+  end
+end
+
 #puts ARGV[0]
 def one
 case ARGV[0]
