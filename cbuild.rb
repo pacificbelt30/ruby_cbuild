@@ -5,35 +5,40 @@
 #end
 
 #puts $0
+#
+#def run(name)
+#  stdtxt = "./stdout.txt"
+#  out = system("#{name} 2> #{stdtxt} 1> #{stdtxt}")
+#  system("cat #{stdtxt}")
+#end
 
-def run(name)
-  stdtxt = "./stdout.txt"
-  out = system("#{name} 2> #{stdtxt} 1> #{stdtxt}")
-  system("cat #{stdtxt}")
+class Command
+  def run
+  end
 end
 
-class Run
+class Run < Command
+  def initialize
+  
+  end
+end
+
+class Gen < Command
   def initialize
     
   end
 end
 
-class Gen
-  def initialize
-    
-  end
-end
 
 
-
-class Build
+class Build < Command
   def initialize
   end
   def fileget
   end
 end
 
-class New
+class New < Command
   def initialize(argc)
       @argc = argc
   end

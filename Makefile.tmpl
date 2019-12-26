@@ -1,11 +1,17 @@
+TARGET:=
+FUNC:=
+HF:=
+#TARGETに作成したい実行ファイル名 
+#FUNCに各種関数定義など
+#HFに.hファイル名
+#ヘッダファイルは.hまで打て
+
 CC:=gcc
 LDFLAGS:=-lm
-TARGET:=
+
+
 OBJ:=$(TARGET:%=%.o)
-FUNC=
-FOBJ=$(FUNC:%=%.o)
-HF=
-#.hまで打て
+FOBJ:=$(FUNC:%=%.o)
 .PHONY:all clean
 all:$(TARGET)
 
@@ -26,12 +32,6 @@ endef
 
 $(foreach x,$(TARGET),$(eval $(call template,$(x))))
 $(foreach x,$(FUNC),$(eval $(call genobj,$(x))))
-
-#%:%.o
-#	$(CC) $(LDFLAGS) -o $@  $^
-
-#%.o:%.c
-#	$(CC) -c  $<
 
 clean:
 	rm -rf $(TARGET) $(OBJ)
