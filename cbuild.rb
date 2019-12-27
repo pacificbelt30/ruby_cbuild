@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+#c言語プログラミングでcファイルのコンパイルを楽にしたい人用
+#一応分割コンパイルにも対応
+
 #/^TARGET/
 #if File.exist?("S1/Makefile") then
 #  print "aa\n"
@@ -44,6 +47,7 @@ class Run < Build #Build継承も
     exe
   end
   
+  #オプションでin,outに対してなにかしたい
   def make
     if @argv.size==1 then
       puts "実行ファイル名を指定してください"
@@ -70,6 +74,12 @@ class Gen < Command
     if !Dir.exist?(".cbuild") then
       system("mkdir .cbuild")
     end
+    time = Time.new
+    time = time.strftime("%Y-%m-%d-%H:%M:%S")
+    buffer = File.open("Makefile","r"){|f| f.read }
+    File.open("./.cbuild/#{time}Makefile.bak","w"){|f| f.write(buffer) }
+    buffer = buffer.gsub(/(^TARGET.*)/,"\\1 #{str}")
+    File.open("Makefile","w"){|f| f.write(buffer) }
   end
 
   def genC
@@ -80,17 +90,94 @@ class Gen < Command
     str = "cp $CBPATH/comment.c.tmpl"
     @argv.delete_at(0)
     @argv.each{|i|
-      tmp = i + ".c"
-      if File.exist?(tmp) then
-        str += tmp
-        puts str
-        system(str)
+      tmp = " " + i + ".c"
+      if !File.exist?(tmp) then
+        puts str + tmp
+        addMake(i)
+
+        system(str+tmp)
       else
         puts tmp + "はすでに存在します"
       end
     }
   end
 end
+
+class GenH
+  def run
+    genH
+  end
+
+  def addMake(str)
+    if !Dir.exist?(".cbuild") then
+      system("mkdir .cbuild")
+    end
+    time = Time.new
+    time = time.strftime("%Y-%m-%d-%H:%M:%S")
+    buffer = File.open("Makefile","r"){|f| f.read }
+    File.open("./.cbuild/#{time}Makefile.bak","w"){|f| f.write(buffer) }
+    buffer = buffer.gsub(/(^HF.*)/,"\\1 #{str}")
+    File.open("Makefile","w"){|f| f.write(buffer) }
+  end
+
+  def genH
+    if @argv.size==1 then
+      puts "作成するhファイル名を指定してください"
+      exit
+    end
+    str = "cp $CBPATH/comment.h.tmpl"
+    @argv.delete_at(0)
+    @argv.each{|i|
+      tmp = " " + i + ".h"
+      if !File.exist?(tmp) then
+        puts str + tmp
+        addMake(i)
+
+        system(str+tmp)
+      else
+        puts tmp + "はすでに存在します"
+      end
+    }
+  end
+end
+
+class GenF
+  def run
+    genF
+  end
+
+  def addMake(str)
+    if !Dir.exist?(".cbuild") then
+      system("mkdir .cbuild")
+    end
+    time = Time.new
+    time = time.strftime("%Y-%m-%d-%H:%M:%S")
+    buffer = File.open("Makefile","r"){|f| f.read }
+    File.open("./.cbuild/#{time}Makefile.bak","w"){|f| f.write(buffer) }
+    buffer = buffer.gsub(/(^FUNC.*)/,"\\1 #{str}")
+    File.open("Makefile","w"){|f| f.write(buffer) }
+  end
+
+  def genF
+    if @argv.size==1 then
+      puts "作成するcファイル名を指定してください"
+      exit
+    end
+    str = "cp $CBPATH/comment.f.tmpl"
+    @argv.delete_at(0)
+    @argv.each{|i|
+      tmp = " " + i + ".h"
+      if !File.exist?(tmp) then
+        puts str + tmp
+        addMake(i)
+        system(str+tmp)
+      else
+        puts tmp + "はすでに存在します"
+      end
+    }
+  end
+end
+
 
 class New < Command
   #attr_accessor :argv
@@ -123,6 +210,28 @@ class New < Command
   end
 end
 
+
+class Rm < Command
+  #attr_accessor :argv
+  #def initialize(argv)
+  #    @argv = argv
+  #end
+
+  def run
+    rmOBJ
+  end
+
+  def rmOBJ
+    if @argv.size==1 then
+      system("make clean")
+    else
+      puts @argv.size
+      puts "引数が多いです"
+    end
+  end
+end
+
+
 def main
   if ARGV.size == 0
     system("cat $CBPATH/cbuild.txt")
@@ -138,6 +247,10 @@ def main
     command = Gen.new(ARGV)
   when "new"
     command = New.new(ARGV)
+  when "genh"
+    command = GenH.new(ARGV)
+  when "rm"
+    command = Rm.new(ARGV)
   else
     system("cat $CBPATH/cbuild.txt")
     exit
