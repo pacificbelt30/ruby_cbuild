@@ -113,8 +113,6 @@ class Run < Build #Build継承も
 end
 
 
-
-
 #.cファイルを作成し MakefileにTARGETに追加する
 class Gen < Command
   def run
@@ -134,20 +132,35 @@ class Gen < Command
     puts "#{str}をMakefileに追加"
   end
 
+  def replaceC(str)
+    #if !Dir.exist?(".cbuild") then
+    #  system("mkdir .cbuild")
+    #end
+    time = Time.new
+    time = time.strftime("%Y/%m/%d/")
+    buffer = File.open("#{str}.c","r"){|f| f.read }
+    #File.open("./.cbuild/#{time}Makefile.bak","w"){|f| f.write(buffer) }
+    buffer = buffer.gsub(/(^ +作成日:).*/,"\\1 #{time}")
+    buffer = buffer.gsub(/(^ +ソースファイル名:).*/,"\\1 #{str}.c")
+    buffer = buffer.gsub(/(^ +実行ファイル名:).*/,"\\1 #{str}")
+    File.open("#{str}.c","w"){|f| f.write(buffer) }
+    #puts "#{str}をMakefileに追加"
+  end
+
   def genC
     if @argv.size==1 then
       puts "作成するcファイル名を指定してください"
       exit
     end
-    str = "cp $CBPATH/comment.c.tmpl"
+    str = "cp $CBPATH/comment.c.tmpl "
     @argv.delete_at(0)
     @argv.each{|i|
-      tmp = " " + i + ".c"
+      tmp = i + ".c"
       if !File.exist?(tmp) then
-        puts str + tmp
+        #puts str + tmp
         addMake(i)
-
         system(str+tmp)
+        replaceC(i)
         puts "#{tmp}を作成"
       else
         puts tmp + "はすでに存在します"
@@ -157,7 +170,7 @@ class Gen < Command
 end
 
 #.hファイルを作成し，Makefileに追加する
-class GenH
+class GenH < Command
   def run
     genH
   end
@@ -180,12 +193,12 @@ class GenH
       puts "作成するhファイル名を指定してください"
       exit
     end
-    str = "cp $CBPATH/comment.h.tmpl"
+    str = "cp $CBPATH/comment.h.tmpl "
     @argv.delete_at(0)
     @argv.each{|i|
-      tmp = " " + i + ".h"
+      tmp = i + ".h"
       if !File.exist?(tmp) then
-        puts str + tmp
+        #puts str + tmp
         addMake(i)
 
         system(str+tmp)
@@ -198,7 +211,7 @@ class GenH
 end
 
 #.cファイルを作成するがMakefileには追加しない
-class GenF
+class GenF < Command
   def run
     genF
   end
@@ -221,12 +234,12 @@ class GenF
       puts "作成するcファイル名を指定してください"
       exit
     end
-    str = "cp $CBPATH/comment.f.tmpl"
+    str = "cp $CBPATH/comment.f.tmpl "
     @argv.delete_at(0)
     @argv.each{|i|
-      tmp = " " + i + ".c"
+      tmp = i + ".c"
       if !File.exist?(tmp) then
-        puts str + tmp
+        #puts str + tmp
         #addMake(i)
         system(str+tmp)
         puts "#{tmp}を作成"
@@ -283,7 +296,7 @@ class Rm < Command
 end
 
 #versionを表示する
-class Version
+class Version < Command
   def run
     catV
   end
