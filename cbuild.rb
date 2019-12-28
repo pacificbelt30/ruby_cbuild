@@ -33,7 +33,9 @@ class Build < Command
     str = "make "
     @argv.delete_at(0)
     @argv.each{|i|
+      if !(/^-.*/=~i) then
       str += i + " "
+      end
     }
     puts str
     system(str)
@@ -46,24 +48,85 @@ class Run < Build #Build継承も
     make
     exe
   end
-  
+
+  def numOption
+    a = 0
+    @argv.each{|i|
+      if /^-.*/=~i then
+        a += 1
+      end
+    }
+    return a
+  end
+
   #オプションでin,outに対してなにかしたい
   def make
     if @argv.size==1 then
       puts "実行ファイル名を指定してください"
       exit
-    elsif @argv.size!=2 then
+    elsif @argv.size>3 then
       puts "引数多し"
       exit
+    elsif @argv.size == 3 && numOption != 1 then
+      puts "実行ファイルは2つ以上指定できません"
+      exit
+    elsif @argv.size == 2 && numOption !=0 then
+      puts "実行ファイル名を指定してください"
+      exit 
     end
-    super
+    super#@argv[0]削除
   end
 
-  def exe
-    puts "run #{@argv[0]}" #@argv[0]はBuildクラスで削除されている
-    system("./#{@argv[0]}")
+  def reg(str)
+    num = 0
+    if /^-.*/=~str then
+      if str.include?("i") then
+        num += 1
+      end
+      if str.include?("o") then
+         num += 2 
+      end
+    end
+    return num
   end
+
+  def runCommand(argv)
+    num = 0
+    str = ""
+    argv.each{|i|
+      if !(/^-.*/=~i) then
+        str = i
+      else
+        num = reg(i)
+      end
+    }
+    case num
+    when 0
+      command = "./#{str}"
+    when 1
+      command = "./#{str} < #{str}.in"
+    when 2
+      command = "./#{str} > #{str}.out"
+    when 3
+      command = "./#{str} < #{str}.in > #{str}.out"
+    else
+      command = ""
+    end
+    return command
+  end
+
 end
+
+
+def exe
+  #puts "run #{@argv[0]}" #@argv[0]はBuildクラスで削除されている
+  #system("./#{@argv[0]}")
+  str = runCommand(@argv)
+  puts "run #{str}"
+  system(str)
+end
+
+
 
 class Gen < Command
   def run
@@ -169,7 +232,7 @@ class GenF
       tmp = " " + i + ".h"
       if !File.exist?(tmp) then
         puts str + tmp
-        addMake(i)
+        #addMake(i)
         system(str+tmp)
       else
         puts tmp + "はすでに存在します"
@@ -231,7 +294,7 @@ class Rm < Command
   end
 end
 
-
+1
 def main
   if ARGV.size == 0
     system("cat $CBPATH/cbuild.txt")
@@ -258,7 +321,7 @@ def main
   command.run
 end
 
-
+#実行
 main
 
 
