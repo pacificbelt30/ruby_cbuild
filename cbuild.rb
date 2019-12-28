@@ -133,18 +133,13 @@ class Gen < Command
   end
 
   def replaceC(str)
-    #if !Dir.exist?(".cbuild") then
-    #  system("mkdir .cbuild")
-    #end
     time = Time.new
-    time = time.strftime("%Y/%m/%d/")
+    time = time.strftime("%Y/%m/%d")
     buffer = File.open("#{str}.c","r"){|f| f.read }
-    #File.open("./.cbuild/#{time}Makefile.bak","w"){|f| f.write(buffer) }
     buffer = buffer.gsub(/(^ +作成日:).*/,"\\1 #{time}")
     buffer = buffer.gsub(/(^ +ソースファイル名:).*/,"\\1 #{str}.c")
     buffer = buffer.gsub(/(^ +実行ファイル名:).*/,"\\1 #{str}")
     File.open("#{str}.c","w"){|f| f.write(buffer) }
-    #puts "#{str}をMakefileに追加"
   end
 
   def genC
@@ -188,6 +183,15 @@ class GenH < Command
     puts "#{str}.hをMakefileに追加"
   end
 
+  def replaceH(str)
+    time = Time.new
+    time = time.strftime("%Y/%m/%d")
+    buffer = File.open("#{str}.h","r"){|f| f.read }
+    buffer = buffer.gsub(/(^ +作成日:).*/,"\\1 #{time}")
+    buffer = buffer.gsub(/(^ +ヘッダファイル名:).*/,"\\1 #{str}.h")
+    File.open("#{str}.h","w"){|f| f.write(buffer) }
+  end
+
   def genH
     if @argv.size==1 then
       puts "作成するhファイル名を指定してください"
@@ -202,6 +206,7 @@ class GenH < Command
         addMake(i)
 
         system(str+tmp)
+        replaceH(i)
         puts "#{tmp}を作成"
       else
         puts tmp + "はすでに存在します"
@@ -229,6 +234,16 @@ class GenF < Command
     puts "#{str}をMakefileに追加"
   end
 
+  def replaceC(str)
+    time = Time.new
+    time = time.strftime("%Y/%m/%d")
+    buffer = File.open("#{str}.c","r"){|f| f.read }
+    buffer = buffer.gsub(/(^ +作成日:).*/,"\\1 #{time}")
+    buffer = buffer.gsub(/(^ +ソースファイル名:).*/,"\\1 #{str}.c")
+    buffer = buffer.gsub(/(^ +実行ファイル名:).*/,"\\1 #{str}")
+    File.open("#{str}.c","w"){|f| f.write(buffer) }
+  end
+
   def genF
     if @argv.size==1 then
       puts "作成するcファイル名を指定してください"
@@ -242,6 +257,7 @@ class GenF < Command
         #puts str + tmp
         #addMake(i)
         system(str+tmp)
+        replaceC(i)
         puts "#{tmp}を作成"
       else
         puts tmp + "はすでに存在します"
@@ -272,7 +288,7 @@ class New < Command
         #return false
       end
     else
-      puts @argv.size
+      #puts @argv.size
       puts "引数が多いです"
     end
   end
@@ -289,7 +305,7 @@ class Rm < Command
     if @argv.size==1 then
       system("make clean")
     else
-      puts @argv.size
+      #puts @argv.size
       puts "引数が多いです"
     end
   end
@@ -328,7 +344,7 @@ def main
   when "rm"
     command = Rm.new(ARGV)
   when "version"
-    command = catV.new(ARGV)
+    command = Version.new(ARGV)
   else
     system("cat $CBPATH/cbuild.txt")
     exit

@@ -1,16 +1,27 @@
-cbuild makefileなどのテンプレートを作成する
+cbuild: Makefileなどのテンプレートを作成する 
+        コンパイルもできる
+
 使用方法：
-cbuild {command} [ファイル名]
+vake {command} [ファイル名]
 
 コマンド：
-  build {ターゲット} makeするターゲットは省略可(その場合はTARGET全部がmakeされる)
-  run   [option] {実行ファイル名} コンパイルして実行する 
-      -i 同名の.inがある場合標準入力にリダイレクトする
-      -o 同名の.outを作成し，標準出力をリダイレクトする
-      -io どっちも
-  new   makefileがない場合新規作成する
-  gen   {拡張子抜きファイル名} .cファイルを作り，MakefileのTARGETに追加する ファイル名は複数指定可 Makefileは.cbuildにバックアップが作られる
-  genh {拡張子なしファイル名} .hファイルを作り MakefileのHFに追加する 
-  genf {拡張子なしファイル名} .cファイルを作る Makefileには追加しない
-  rm .oファイルと実行ファイルを削除する．(make cleanを実行してるだけ)
-  version バージョン
+  build {ターゲット} 
+        makeするターゲットは省略可(その場合はTARGET全部がmakeされる)
+  run [option] {実行ファイル名} 
+        コンパイルして実行する 
+          -i 同名の.inがある場合標準入力にリダイレクトする
+          -o 同名の.outを作成し，標準出力をリダイレクトする
+          -io どっちも
+  new       
+        Makefileがない場合新規作成する
+  gen {.cなしファイル名} 
+        .cファイルを作り，MakefileのTARGETに追加する 
+        ファイル名は複数指定可 Makefileは.cbuildにバックアップが作られる
+  genh {.hなしファイル名} 
+        .hファイルを作り MakefileのHFに追加する 
+  genf {.cなしファイル名} 
+        .cファイルを作る Makefileには追加しない
+  rm    
+        .oファイルと実行ファイルを削除する．(make cleanを実行してるだけ)
+  version   
+        バージョン表示
