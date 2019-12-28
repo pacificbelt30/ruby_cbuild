@@ -179,7 +179,7 @@ class GenH
     time = time.strftime("%Y-%m-%d-%H:%M:%S")
     buffer = File.open("Makefile","r"){|f| f.read }
     File.open("./.cbuild/#{time}Makefile.bak","w"){|f| f.write(buffer) }
-    buffer = buffer.gsub(/(^HF.*)/,"\\1 #{str}")
+    buffer = buffer.gsub(/(^HF.*)/,"\\1 #{str}.h")
     File.open("Makefile","w"){|f| f.write(buffer) }
   end
 
@@ -294,7 +294,16 @@ class Rm < Command
   end
 end
 
-1
+class Version
+  def run
+    catV
+  end
+  def catV
+    system("cat $CBPATH/version.txt")
+  end
+end
+
+
 def main
   if ARGV.size == 0
     system("cat $CBPATH/cbuild.txt")
@@ -312,8 +321,12 @@ def main
     command = New.new(ARGV)
   when "genh"
     command = GenH.new(ARGV)
+  when "genf"
+    command = GenF.new(ARGV)
   when "rm"
     command = Rm.new(ARGV)
+  when "version"
+    command = catV.new(ARGV)
   else
     system("cat $CBPATH/cbuild.txt")
     exit
