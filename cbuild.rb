@@ -2,19 +2,6 @@
 #c言語プログラミングでcファイルのコンパイルを楽にしたい人用
 #一応分割コンパイルにも対応
 
-#/^TARGET/
-#if File.exist?("S1/Makefile") then
-#  print "aa\n"
-#end
-
-#puts $0
-#
-#def run(name)
-#  stdtxt = "./stdout.txt"
-#  out = system("#{name} 2> #{stdtxt} 1> #{stdtxt}")
-#  system("cat #{stdtxt}")
-#end
-
 #他のクラスのベース run関数を宣言
 class Command
   attr_accessor :argv

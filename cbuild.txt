@@ -9,7 +9,7 @@ cbuild {command} [ファイル名]
       -o 同名の.outを作成し，標準出力をリダイレクトする
       -io どっちも
   new   makefileがない場合新規作成する
-  gen   {拡張子抜きファイル名} .cファイルを作り，MakefileのTARGETに追加する ファイル名は複数指定可
+  gen   {拡張子抜きファイル名} .cファイルを作り，MakefileのTARGETに追加する ファイル名は複数指定可 Makefileは.cbuildにバックアップが作られる
   genh {拡張子なしファイル名} .hファイルを作り MakefileのHFに追加する 
   genf {拡張子なしファイル名} .cファイルを作る Makefileには追加しない
   rm .oファイルと実行ファイルを削除する．(make cleanを実行してるだけ)
