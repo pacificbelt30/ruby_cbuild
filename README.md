@@ -3,7 +3,8 @@
 毎回Makefileやコメントが必要なcファイルを作るのがめんどくさい，
 実行時の入力と出力のリダイレクトがめんどくさい．
 それらを楽にしたいという目的で作られた．  
-つまりそれ以外はおまけ
+つまりそれ以外はおまけ  
+rubyで作られているのは，文字列の扱いとか諸々cより楽だから
 
 ## rubyの勉強
 rubyの勉強と言いながら別に勉強しているわけではない．  
@@ -26,16 +27,16 @@ end
 ## インストール方法
 以下を実行
 ```shell
-$git clone https://github.com/pacificbelt30/ruby_cbuild
-$cd ruby_cbuild
-$bash install.sh #~/.cbuild以下にインストールされる
+$ git clone https://github.com/pacificbelt30/ruby_cbuild
+$ cd ruby_cbuild
+$ bash install.sh #~/.cbuild以下にインストールされる
 ```
 終了後は各自cloneしたディレクトリを削除してください．  
 ## 使用方法
 makefileなどのテンプレートを作成する  
 端末で＄cbuildってうとう！そしたらヘルプがでるぞ！  
 ```
-$cbuild {command} [ファイル名] 
+$ cbuild {command} [ファイル名] 
 ``` 
 
 コマンド：  
