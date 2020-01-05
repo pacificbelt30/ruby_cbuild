@@ -7,5 +7,5 @@ cp ~/.bashrc ~/.bashrc.bak
 echo "export CBPATH=~/.cbuild" >> ~/.bashrc
 echo "export PATH=\$PATH:\$CBPATH/bin" >> ~/.bashrc
 echo "cat \$CBPATH/vimascii" >> ~/.bashrc
-source .bashrc
+source ~/.bashrc
 rm $CBPATH/install.sh
