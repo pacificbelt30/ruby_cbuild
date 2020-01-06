@@ -147,7 +147,7 @@ class Gen < Command
       puts "作成するcファイル名を指定してください"
       exit
     end
-    str = "cp $CBPATH/comment.c.tmpl "
+    str = "cp $CBPATH/tmpl/comment.c.tmpl "
     @argv.delete_at(0)
     @argv.each{|i|
       tmp = i + ".c"
@@ -197,7 +197,7 @@ class GenH < Command
       puts "作成するhファイル名を指定してください"
       exit
     end
-    str = "cp $CBPATH/comment.h.tmpl "
+    str = "cp $CBPATH/tmpl/comment.h.tmpl "
     @argv.delete_at(0)
     @argv.each{|i|
       tmp = i + ".h"
@@ -249,7 +249,7 @@ class GenF < Command
       puts "作成するcファイル名を指定してください"
       exit
     end
-    str = "cp $CBPATH/comment.f.tmpl "
+    str = "cp $CBPATH/tmpl/comment.f.tmpl "
     @argv.delete_at(0)
     @argv.each{|i|
       tmp = i + ".c"
@@ -280,7 +280,7 @@ class New < Command
       end
 
       if !(File.exist?("Makefile")||File.exist?("makefile")) then
-        system("cp $CBPATH/Makefile.tmpl ./Makefile")
+        system("cp $CBPATH/tmpl/Makefile.tmpl ./Makefile")
         #return true  
       else
         puts "Makefileがすでに存在します"
