@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 #c言語プログラミングでcファイルのコンパイルを楽にしたい人用
 #一応分割コンパイルにも対応
-$LOAD_PATH.push('$CBPATH/')
-require "env"
+env = ENV['CBPATH']
+$LOAD_PATH.push("$CBPATH/")
+require "env"#強引require
 
 #他のクラスのベース run関数を宣言
 class Command
