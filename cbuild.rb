@@ -2,6 +2,8 @@
 #c言語プログラミングでcファイルのコンパイルを楽にしたい人用
 #一応分割コンパイルにも対応
 
+require "./env"
+
 #他のクラスのベース run関数を宣言
 class Command
   attr_accessor :argv
@@ -137,6 +139,8 @@ class Gen < Command
     time = time.strftime("%Y/%m/%d")
     buffer = File.open("#{str}.c","r"){|f| f.read }
     buffer = buffer.gsub(/(^ +作成日:).*/,"\\1 #{time}")
+    buffer = buffer.gsub(/(^ +作成者:).*/,"\\1 #{$author}")
+    buffer = buffer.gsub(/(^ +学籍番号:).*/,"\\1 #{$id}")
     buffer = buffer.gsub(/(^ +ソースファイル名:).*/,"\\1 #{str}.c")
     buffer = buffer.gsub(/(^ +実行ファイル名:).*/,"\\1 #{str}")
     File.open("#{str}.c","w"){|f| f.write(buffer) }
@@ -188,6 +192,8 @@ class GenH < Command
     time = time.strftime("%Y/%m/%d")
     buffer = File.open("#{str}.h","r"){|f| f.read }
     buffer = buffer.gsub(/(^ +作成日:).*/,"\\1 #{time}")
+    buffer = buffer.gsub(/(^ +作成者:).*/,"\\1 #{$author}")
+    buffer = buffer.gsub(/(^ +学籍番号:).*/,"\\1 #{$id}")
     buffer = buffer.gsub(/(^ +ヘッダファイル名:).*/,"\\1 #{str}.h")
     File.open("#{str}.h","w"){|f| f.write(buffer) }
   end
@@ -239,6 +245,8 @@ class GenF < Command
     time = time.strftime("%Y/%m/%d")
     buffer = File.open("#{str}.c","r"){|f| f.read }
     buffer = buffer.gsub(/(^ +作成日:).*/,"\\1 #{time}")
+    buffer = buffer.gsub(/(^ +作成者:).*/,"\\1 #{$author}")
+    buffer = buffer.gsub(/(^ +学籍番号:).*/,"\\1 #{$id}")
     buffer = buffer.gsub(/(^ +ソースファイル名:).*/,"\\1 #{str}.c")
     buffer = buffer.gsub(/(^ +実行ファイル名:).*/,"\\1 #{str}")
     File.open("#{str}.c","w"){|f| f.write(buffer) }

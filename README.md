@@ -36,6 +36,7 @@ $ bash install.sh #~/.cbuild以下にインストールされる
 ## 使用方法
 makefileなどのテンプレートを作成する  
 ~/.cbuild/tmpl の中にあるファイルを編集して自分用のテンプレを作れ  
+~/.cbuild/env.rb に作成者と学籍番号を設定する
 端末で＄sakeってうとう！そしたらヘルプがでるぞ！  
 ```
 $ sake {command} [ファイル名] 
