@@ -2,7 +2,7 @@
 #c言語プログラミングでcファイルのコンパイルを楽にしたい人用
 #一応分割コンパイルにも対応
 
-require "./env"
+require "$CBPATH/env"
 
 #他のクラスのベース run関数を宣言
 class Command
@@ -151,7 +151,7 @@ class Gen < Command
       puts "作成するcファイル名を指定してください"
       exit
     end
-    str = "cp $CBPATH/tmpl/comment.c.tmpl "
+    str = "cp $CBPATH/tmpl/gen.c.tmpl "
     @argv.delete_at(0)
     @argv.each{|i|
       tmp = i + ".c"
@@ -203,7 +203,7 @@ class GenH < Command
       puts "作成するhファイル名を指定してください"
       exit
     end
-    str = "cp $CBPATH/tmpl/comment.h.tmpl "
+    str = "cp $CBPATH/tmpl/genh.c.tmpl "
     @argv.delete_at(0)
     @argv.each{|i|
       tmp = i + ".h"
@@ -257,7 +257,7 @@ class GenF < Command
       puts "作成するcファイル名を指定してください"
       exit
     end
-    str = "cp $CBPATH/tmpl/comment.f.tmpl "
+    str = "cp $CBPATH/tmpl/genf.c.tmpl "
     @argv.delete_at(0)
     @argv.each{|i|
       tmp = i + ".c"

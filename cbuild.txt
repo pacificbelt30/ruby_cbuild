@@ -25,7 +25,7 @@ sake {command} [ファイル名]
         Makefileがない場合新規作成する
   gen {.cなしファイル名} 
         .cファイルを作り，MakefileのTARGETに追加する 
-        ファイル名は複数指定可 Makefileは.cbuildにバックアップが作られる
+        ファイル名は複数指定可 Makefileは./.cbuildにバックアップが作られる
   genh {.hなしファイル名} 
         .hファイルを作り MakefileのHFに追加する 
   genf {.cなしファイル名} 

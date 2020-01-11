@@ -54,3 +54,6 @@ $ sake {command} [ファイル名]
   * genf {拡張子なしファイル名} .cファイルを作る Makefileには追加しない  
   * rm .oファイルと実行ファイルを削除する．(make cleanを実行してるだけ)  
   * version バージョン  
+
+注意：
+  Makefileに書き込むコマンド(gen系)は./.cbuildにMakefileのバックアップファイルを作る
