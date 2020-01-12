@@ -148,6 +148,10 @@ class Gen < Command
   end
 
   def genC
+    if !(File.exist?("Makefile")) then
+      puts "Makefileを作成してください．"
+      exit
+    end
     if @argv.size==1 then
       puts "作成するcファイル名を指定してください"
       exit
@@ -200,6 +204,10 @@ class GenH < Command
   end
 
   def genH
+    if !(File.exist?("Makefile")) then
+      puts "Makefileを作成してください．"
+      exit
+    end
     if @argv.size==1 then
       puts "作成するhファイル名を指定してください"
       exit
@@ -254,6 +262,10 @@ class GenF < Command
   end
 
   def genF
+    if !(File.exist?("Makefile")) then
+      puts "Makefileを作成してください．"
+      exit
+    end
     if @argv.size==1 then
       puts "作成するcファイル名を指定してください"
       exit
