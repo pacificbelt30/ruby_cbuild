@@ -1,7 +1,8 @@
 #!/bin/bash
 mkdir ~/.cbuild
 mkdir ~/.cbuild/bin
-cp -r ./* ~/.cbuild/
+cp -r ./ ~/.cbuild/
+#cp -r ./* ~/.cbuild/
 ln -s ~/.cbuild/cbuild.rb ~/.cbuild/bin/sake
 cp ~/.bashrc ~/.bashrc.bak
 echo "export CBPATH=~/.cbuild" >> ~/.bashrc
