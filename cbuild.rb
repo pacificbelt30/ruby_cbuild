@@ -2,7 +2,7 @@
 #c言語プログラミングでcファイルのコンパイルを楽にしたい人用
 #一応分割コンパイルにも対応
 env = ENV['CBPATH']
-$LOAD_PATH.push("$CBPATH/")
+$LOAD_PATH.push("#{env}")
 require "env"#強引require
 
 #他のクラスのベース run関数を宣言
