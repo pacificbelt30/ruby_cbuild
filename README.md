@@ -32,11 +32,12 @@ $ git clone https://github.com/pacificbelt30/ruby_cbuild
 $ cd ruby_cbuild
 $ bash install.sh #~/.cbuild以下にインストールされる
 ```
+エラーがでても多分うまく行っているので複数回実行しない  
 終了後は各自cloneしたディレクトリを削除してください．  
 ## 使用方法
 makefileなどのテンプレートを作成する  
 ~/.cbuild/tmpl の中にあるファイルを編集して自分用のテンプレを作れ  
-~/.cbuild/env.rb に作成者と学籍番号を設定する
+~/.cbuild/env.rb に作成者と学籍番号を設定する  
 端末で＄sakeってうとう！そしたらヘルプがでるぞ！  
 ```
 $ sake {command} [ファイル名] 
@@ -57,3 +58,11 @@ $ sake {command} [ファイル名]
 
 注意：
   Makefileに書き込むコマンド(gen系)は./.cbuildにMakefileのバックアップファイルを作る
+  
+## 更新
+更新方法は考え中  
+~/.cbuild/以下で
+```
+$ git pull 
+```
+で行けるかもしれない
